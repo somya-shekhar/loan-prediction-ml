@@ -1,0 +1,10 @@
+#Model -Building Requirements
+numpy
+pandas
+joblib
+scikit-learn
+scipy
+setuptools
+wheel
+pytest
+streamlit
