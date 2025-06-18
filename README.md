@@ -57,7 +57,7 @@ To clone and set up the repository in a new virtual environment, follow these st
 
 1. **Clone the repository**:
     ```sh
-    git clone https://github.com/CHANGELINK/Loan-Predication.git
+    git clone https://github.com/somya-shekhar/loan-prediction-ml.git
     cd Loan-Predication
     ```
 
