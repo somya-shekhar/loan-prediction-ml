@@ -8,3 +8,5 @@ setuptools==69.5.1
 wheel==0.43.0
 pytest==7.4.4
 streamlit
+Flask
+gunicorn
