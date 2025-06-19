@@ -6,21 +6,21 @@ import os
 
 app = Flask(__name__)
 
-# Load the pipeline model
-MODEL_PATH = os.path.join("model", "loan_model.joblib")  # Adjust if model path differs
+# Adjust model path
+MODEL_PATH = os.path.join("model", "final_model.pkl")
+
 try:
     model = joblib.load(MODEL_PATH)
 except Exception as e:
     model = None
     print(f"Error loading model: {e}")
 
-# Home route with form
 @app.route("/", methods=["GET", "POST"])
 def predict():
-    prediction_result = None
+    result = None
     if request.method == "POST":
         try:
-            data = {
+            input_data = {
                 "Gender": [request.form["Gender"]],
                 "Married": [request.form["Married"]],
                 "Dependents": [request.form["Dependents"]],
@@ -31,16 +31,17 @@ def predict():
                 "LoanAmount": [float(request.form["LoanAmount"])],
                 "Loan_Amount_Term": [float(request.form["Loan_Amount_Term"])],
                 "Credit_History": [int(request.form["Credit_History"])],
-                "Property_Area": [request.form["Property_Area"]]
+                "Property_Area": [request.form["Property_Area"]],
             }
 
-            df = pd.DataFrame(data)
-            prediction = model.predict(df)[0]
-            prediction_result = "Approved ✅" if prediction == 1 else "Rejected ❌"
-        except Exception as e:
-            prediction_result = f"Error during prediction: {e}"
+            df = pd.DataFrame(input_data)
+            pred = model.predict(df)[0]
+            result = "✅ Loan Approved" if pred == 1 else "❌ Loan Rejected"
 
-    return render_template("form.html", result=prediction_result)
+        except Exception as e:
+            result = f"Error: {e}"
+
+    return render_template("form.html", result=result)
 
 if __name__ == "__main__":
     app.run(debug=True)
